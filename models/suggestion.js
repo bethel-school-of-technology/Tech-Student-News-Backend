@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var SuggestionSchema = new Schema(
     {
-
+        Topic:{type:String, required: true}
     }
 );
 
