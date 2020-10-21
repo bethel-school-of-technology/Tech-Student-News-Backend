@@ -9,23 +9,9 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-// Setting up Mongoose Connection
-var mongoose = require ('mongoose');
-var mongoDB = 'mongodb+srv://dbuser:Password1!@cluster0.0xruf.mongodb.net/Tech-Student-News?retryWrites=true&w=majority';
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,5 +1,5 @@
 {
-  "name": "student-news",
+  "name": "tech-student-news-backend",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -11,10 +11,6 @@
     "express": "~4.16.1",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
-    "mongoose": "^5.10.9",
     "morgan": "~1.9.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
   }
 }
