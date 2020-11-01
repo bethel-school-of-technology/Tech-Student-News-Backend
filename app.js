@@ -6,7 +6,9 @@ var logger = require('morgan');
 var cors = require("cors");
 var mongoose = require("mongoose");
 
-
+var articlesRouter = require('./routes/articles');
+var eventsRouter = require('./routes/events');
+var suggestionsRouter = require('./routes/suggestion');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -40,8 +42,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ origin: "http://localhost:4200", credentials: true }));
 
-
-
+app.use('/events',eventsRouter);
+app.use('/articles',articlesRouter);
+app.use('/suggestions',suggestionsRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
