@@ -17,7 +17,11 @@ var mongoose = require ('mongoose');
 var mongoDB = 'mongodb+srv://dbuser:Password1!@cluster0.0xruf.mongodb.net/Tech-Student-News?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on("connected", () => console.log(`Mongoose connection open to ${mongoDB}`));
+db.on("disconnected", () => console.log("Mongoose connection disconnected"));
+db.on("error", console.error.bind(console, "Mongoose connection error:"));
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,13 +45,14 @@ app.use(cors({ origin: "http://localhost:4200", credentials: true }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-var mongoDB = "mongodb://127.0.0.1/database";
-mongoose.connect(mongoDB, {  useNewUrlParser: true });
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on("connected", () => console.log(`Mongoose connection open to ${mongoDB}`));
-db.on("disconnected", () => console.log("Mongoose connection disconnected"));
-db.on("error", console.error.bind(console, "Mongoose connection error:"));
+//var mongoDB = "mongodb://127.0.0.1/database";
+//mongoose.connect(mongoDB, {  useNewUrlParser: true });
+//mongoose.Promise = global.Promise;
+//var db = mongoose.connection;
+//db.on("connected", () => console.log(`Mongoose connection open to ${mongoDB}`));
+//db.on("disconnected", () => console.log("Mongoose connection disconnected"));
+//db.on("error", console.error.bind(console, "Mongoose connection error:"));
+
 
 
 // catch 404 and forward to error handler
