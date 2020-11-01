@@ -14,7 +14,7 @@ router.post("/signup", function(req, res, next) {
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      password: req.body.password
+      Password: authService.hashPassword(req.body.password)
     },
     function(err, result) {
       if (err) {
@@ -39,7 +39,7 @@ router.post("/login", function(req, res, next) {
       // make sure we found a user, then compare the passwords
       if (
         userInfo &&
-        bcrypt.compareSync(req.body.password, userInfo.password)
+        bcrypt.compareSync(plainTextPassword, hashedPassword)
       ) {
         let token = jwt.sign(
           { id: userInfo._id, userName: userInfo.username },
