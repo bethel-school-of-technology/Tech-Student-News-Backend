@@ -10,4 +10,4 @@ var EventSchema = new Schema(
 );
 
 
-module.exports = mongoose.model('Event' , 'EventSchema');
+module.exports = mongoose.model('Event' , EventSchema);

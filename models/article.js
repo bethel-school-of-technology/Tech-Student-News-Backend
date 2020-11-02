@@ -4,13 +4,13 @@ var Schema = mongoose.Schema;
 
 var ArticleSchema = new Schema(
     {
-        Category:{type:string,required: true, maxlength: 100},
+        Category:{type:String, required: true, maxlength: 100},
         Date:{type: Date, required: true},
-        Content: {type: string, required: true},
-        Keywords: {type:string},
+        Content: {type: String, required: true},
+        Keywords: {type:String},
 
     }
 );
 
 
-module.exports = mongoose.model('Article' , 'ArticleSchema');
+module.export = mongoose.model('Article' , ArticleSchema);

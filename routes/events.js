@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-let EventsModel = require("../models/events");
+let EventsModel = require("../models/event");
 
 router.get("/", function(req, res, next) {
     EventsModel.find()
