@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
 var mongoose = require("mongoose");
+var bodyParser = require('body-parser')
+
 
 var articlesRouter = require('./routes/articles');
 var eventsRouter = require('./routes/events');
@@ -41,6 +43,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ origin: "http://localhost:4200", credentials: true }));
+app.use(bodyParser.json())
 
 app.use('/events',eventsRouter);
 app.use('/articles',articlesRouter);
