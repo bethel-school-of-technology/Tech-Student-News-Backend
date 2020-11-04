@@ -1,48 +1,37 @@
-const { request } = require('express');
 var express = require('express');
 var router = express.Router();
-let ArticlesModel = require("../models/article");
+let Articles = require("../models/article");
 
 router.get("/", function(req, res, next) {
-  ArticlesModel.find()
-    .then(result => res.send(result))
-    .catch(error => res.status(500).send(error));
+  Articles.find()
+  .then(articles => res.json(articles))
+  .catch(_err => res.status(404).json({ noarticlesfound: 'No articles found' }));
 });
 
-router.get("/", function(req, res, next) {
-  ArticlesModel.findAll()
-    .then(result => res.send(result))
-    .catch(error => res.status(500).send(error));
+router.get('/:id', (req, res) => {
+  Article.findById(req.params.id)
+    .then(article => res.json(article))
+    .catch(_err => res.status(404).json({ noarticlefound: 'No Article found' }));
 });
 
-router.post("/", function(req, res, next) {
-  console.log(req.body);
-  let newArticles = new ArticlesModel();
-  newArticles.name = req.body.name;
-  newArticles
-    .save()
-    .then(articles => res.json(articles))
-    .catch(error => res.status(400).send(error));
+router.post('/', (req, res) => {
+  Article.create(req.body)
+    .then(article => res.json({ msg: 'Article added successfully' }))
+    .catch(_err => res.status(400).json({ error: 'Unable to add this book' }));
 });
 
-router.put('/:id',function(req, res,next)  {
-  let newArticles = new ArticlesModel();
-  newArticles.findByIdAndUpdate(parsInt(req.params.id,req.body));
-  newArticles
-.save()
-.then(articles => res.json (articles))
-.catch(error => res.status(400).send(error));
+router.put('/:id', (req, res) => {
+  Artcle.findByIdAndUpdate(req.params.id, req.body)
+    .then(article => res.json({ msg: 'Updated successfully' }))
+    .catch(_err =>
+      res.status(400).json({ error: 'Unable to update the Database' })
+    );
 });
 
-router.delete('/:id',function(req,res,next){
-  var articles = getArticlesById(parsInt(req.params.id));
-  if(articles){
-removeArticles(parseInt(req.params.id));
-res.send('ok');
-  }else {
-    res.status(400).send("record not found");
-  }
-  
+router.delete('/:id', (req, res) => {
+  Article.findByIdAndRemove(req.params.id, req.body)
+    .then(articles => res.json({ mgs: 'Article entry deleted successfully' }))
+    .catch(err => res.status(404).json({ error: 'No such a Article' }));
 });
 
 
