@@ -2,11 +2,13 @@ var mongoose = require ('mongoose');
 
 var Schema = mongoose.Schema;
 
-var SuggestionSchema = new Schema(
+var Suggestion = new Schema(
     {
-        Topic:{type:String, required: true}
+        Topic:{type:String,}
     }
 );
 
 
-module.exports = mongoose.model('Suggestion' , SuggestionSchema);
+var SuggestionModel = mongoose.model('Suggestion' , Suggestion);
+
+module.exports = SuggestionModel;

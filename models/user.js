@@ -1,9 +1,9 @@
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var bcrypt = require("bcryptjs");
 
 var Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+var User = new Schema({
   firstName: {
     type: String,
     required: true
@@ -26,10 +26,11 @@ var UserSchema = new Schema({
   }
 });
 
-UserSchema.pre("save", function(next) {
+User.pre("save", function(next) {
   let salt = bcrypt.genSaltSync(10);
   this.password = bcrypt.hashSync(this.password, salt);
   next();
 });
 
-module.exports = mongoose.model("User", UserSchema);
+var UserModel = mongoose.model("User", User);
+module.exports = UserModel

@@ -1,27 +1,77 @@
 var express = require('express');
 var router = express.Router();
-let EventsModel = require("../models/event");
+var Event = require("../models/event");
 
-router.get("/", function(req, res, next) {
-    EventsModel.find()
-    .then(result => res.send(result))
-    .catch(error => res.status(500).send(error));
+router.get("/", async (req, res) => {
+  try{
+  const event = await Event.find(); 
+  res.status(200).json(
+  event
+  );
+} catch(err){
+res.status(404).json({
+  status:'fail',
+  message: err
+});
+} 
 });
 
-router.get("/", function(req, res, next) {
-  EventsModel.findAll()
-  .then(result => res.send(result))
-  .catch(error => res.status(500).send(error));
+router.get("/:id", async (req, res) => {
+  try{
+  const event = await Event.findById(req.params.id);
+    res.status(200).json(
+      event
+    );  
+} catch(err){
+  res.status(404).json({
+    status: 'fail',
+    message: err
+  });
+}
 });
 
-router.post("/", function(req, res, next) {
-  console.log(req.body);
-  let newEvents = new EventsModel();
-  newEvents.name = req.body.name;
-  newEvents
-    .save()
-    .then(events => res.json(events))
-    .catch(error => res.status(400).send(error));
+router.post('/add', async (req, res) => {
+  try{
+  const newEvent = await Event.create(req.body);
+  res.status(201).json(
+    newEvent
+  );
+} catch(err){
+  res.status(400).json({
+    status:'fail',
+    message: err
+  });
+}  
 });
+
+router.put('/:id', async (req, res) => {
+  try {
+  const event = await Event.findByIdAndUpdate(req.params.id,req.body);
+  res.status(201).json(
+     event
+  );
+} catch(err){
+  res.status(404).json({
+    status:'fail',
+    message: err
+  });
+} 
+});
+
+router.delete('/:id', async (req, res) => {
+  try{
+  const event = await Event.findByIdAndRemove(req.params.id,req.body); 
+  res.status(201).json(
+    event
+  );
+} catch(err){
+  res.status(404).json({
+    status: 'fail',
+    message: err
+  });
+}
+});
+   
+
 
 module.exports = router;

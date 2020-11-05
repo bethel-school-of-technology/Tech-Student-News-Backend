@@ -7,7 +7,6 @@ router.get('/', function(req, res, next) {
 });
 
 
-
 router.post('/', function(req, res) {
   res.send('You successfully created a POST route!');
 });

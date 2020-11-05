@@ -2,12 +2,14 @@ var mongoose = require ('mongoose');
 
 var Schema = mongoose.Schema;
 
-var EventSchema = new Schema(
+var Event = new Schema(
     {
-        NameOfEvent:{type: String, required:true, maxlength: 100},
-        Date: {type: Date, required: true}
+        NameOfEvent:{type: String,},
+        Date: {type: Date,}
     }
 );
 
 
-module.exports = mongoose.model('Event' , EventSchema);
+var EventModel = mongoose.model('Event' , Event);
+
+module.exports = EventModel;

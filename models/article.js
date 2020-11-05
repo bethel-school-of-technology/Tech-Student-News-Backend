@@ -2,16 +2,15 @@ var mongoose = require ('mongoose');
 
 var Schema = mongoose.Schema;
 
-var ArticleSchema = new Schema(
-    {
-
-        Category:{type:String, required: true, maxlength: 100},
-        Date:{type: Date, required: true},
-        Content: {type:String, required: true},
-        Keywords: {type:String},
-
+var Article = new Schema(
+   {
+        Category:{type:String},
+        Date:{type: Date},
+        Content: {type:String},
+        Keywords:{type:String}
     }
-);
+   );
 
+var ArticleModel = mongoose.model('Article' , Article);
 
-module.export = mongoose.model('Article' , ArticleSchema);
+module.exports = ArticleModel;

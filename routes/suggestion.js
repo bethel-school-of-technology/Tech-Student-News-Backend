@@ -1,28 +1,77 @@
 var express = require("express");
 var express = require('express');
 var router = express.Router();
-let SuggestionModel = require("../models/suggestion");
+Suggestion = require("../models/suggestion");
 
-router.get("/", function(req, res, next) {
-    SuggestionModel.find()
-    .then(result => res.send(result))
-    .catch(error => res.status(500).send(error));
+router.get("/", async (req, res) => {
+  try{
+  const suggestion = await Suggestion.find(); 
+  res.status(200).json(
+  suggestion
+  );
+} catch(err){
+res.status(404).json({
+  status:'fail',
+  message: err
+});
+} 
 });
 
-router.get("/", function(req, res, next) {
-  EventsModel.findAll()
-  .then(result => res.send(result))
-  .catch(error => res.status(500).send(error));
+router.get("/:id", async (req, res) => {
+  try{
+  const suggestion = await Suggestion.findById(req.params.id);
+    res.status(200).json(
+      suggestion
+    );  
+} catch(err){
+  res.status(404).json({
+    status: 'fail',
+    message: err
+  });
+}
 });
 
-router.post("/", function(req, res, next) {
-  console.log(req.body);
-  let newSuggestion = new SuggestionModel();
-  newSuggestion.name = req.body.name;
-  newSuggestion
-    .save()
-    .then(suggestion => res.json(suggestion))
-    .catch(error => res.status(400).send(error));
+router.post('/add', async (req, res) => {
+  try{
+  const newSuggestion = await Suggestion.create(req.body);
+  res.status(201).json(
+    newSuggestion
+  );
+} catch(err){
+  res.status(400).json({
+    status:'fail',
+    message: err
+  });
+}  
 });
+
+router.put('/:id', async (req, res) => {
+  try {
+  const suggestion = await Suggestion.findByIdAndUpdate(req.params.id,req.body);
+  res.status(201).json(
+     suggestion
+  );
+} catch(err){
+  res.status(404).json({
+    status:'fail',
+    message: err
+  });
+} 
+});
+
+router.delete('/:id', async (req, res) => {
+  try{
+  const suggestion = await Suggestion.findByIdAndRemove(req.params.id,req.body); 
+  res.status(201).json(
+    suggestion
+  );
+} catch(err){
+  res.status(404).json({
+    status: 'fail',
+    message: err
+  });
+}
+});
+   
 
 module.exports = router;

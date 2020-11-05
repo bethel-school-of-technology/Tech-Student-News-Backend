@@ -1,43 +1,77 @@
 var express = require('express');
 var router = express.Router();
-let Articles = require("../models/article");
+var Article = require("../models/article");
 
-router.get("/", function(req, res, next) {
-  let newArticles = Articles(); 
-  newArticles.find()
-  .then(articles => res.json(articles))
-  .catch(error => res.status(404).send( error  ));
+router.get("/", async (req, res) => {
+  try{
+  const article = await Article.find(); 
+  res.status(200).json(
+  article
+  );
+} catch(err){
+res.status(404).json({
+  status:'fail',
+  message: err
+});
+} 
 });
 
-router.get('/:id', (req, res) => {
-  let newArticles = Articles(); 
-  newArticles.findById(req.params.id)
-    .then(result => res.json(result))
-    .catch(error => res.status(404).send( error ));
+router.get("/:id", async (req, res) => {
+  try{
+  const article = await Article.findById(req.params.id);
+    res.status(200).json(
+      article
+    );  
+} catch(err){
+  res.status(404).json({
+    status: 'fail',
+    message: err
+  });
+}
 });
 
-router.post('/', (req, res) => {
-  let newArticles = Articles(); 
-     newArticles.create(req.body)
-    .then(result => res.json( result ))
-    .catch(error => res.status(400).send(error));
+router.post('/add', async (req, res) => {
+  try{
+  const newArticle = await Article.create(req.body);
+  res.status(201).json(
+    newArticle
+  );
+} catch(err){
+  res.status(400).json({
+    status:'fail',
+    message: err
+  });
+}  
 });
 
-router.put('/:id', (req, res) => {
-  let newArticles = Articles(); 
-  newArticles.findByIdAndUpdate(req.params.id, req.body)
-    .then(result => res.send(result ))
-    .catch(error =>
-      res.status(400).json(error)
-    );
+router.put('/:id', async (req, res) => {
+  try {
+  const article = await Article.findByIdAndUpdate(req.params.id,req.body);
+  res.status(201).json(
+     article
+  );
+} catch(err){
+  res.status(404).json({
+    status:'fail',
+    message: err
+  });
+} 
 });
 
-router.delete('/:id', (req, res) => {
-  let newArticles = Articles(); 
-  newArticles.findByIdAndRemove(req.params.id, req.body)
-    .then(result => res.json(result))
-    .catch(error => res.status(404).send( error));
+router.delete('/:id', async (req, res) => {
+  try{
+  const article = await Article.findByIdAndRemove(req.params.id,req.body); 
+  res.status(201).json(
+    article
+  );
+} catch(err){
+  res.status(404).json({
+    status: 'fail',
+    message: err
+  });
+}
 });
+   
 
 
 module.exports = router;

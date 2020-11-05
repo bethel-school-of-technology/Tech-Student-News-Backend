@@ -3,10 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require("cors");
-var mongoose = require("mongoose");
-var bodyParser = require('body-parser')
-
+var cors = require('cors');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
 var articlesRouter = require('./routes/articles');
 var eventsRouter = require('./routes/events');
@@ -42,14 +41,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({ origin: "http://localhost:4200", credentials: true }));
-app.use(bodyParser.json())
+app.use(cors());// {origin: "http://localhost:4200", credentials: true }));
+app.use(bodyParser.json());
 
-app.use('/events',eventsRouter);
-app.use('/articles',articlesRouter);
-app.use('/suggestions',suggestionsRouter);
+
+app.use('/event',eventsRouter);
+app.use('/article',articlesRouter);
+app.use('/suggestion',suggestionsRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 
 //var mongoDB = "mongodb://127.0.0.1/database";
 //mongoose.connect(mongoDB, {  useNewUrlParser: true });
