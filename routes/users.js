@@ -6,15 +6,15 @@ const jwt = require("jsonwebtoken");
 const authService = require("../services/auth");
 
 // create new user if one doesn't exist
-router.post("/signup", async(req, res, next) =>{
+router.post("/signup", function(req, res, next) {
   console.log(req.body);
-  await User.create(
+   User.create(
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      Password: authService.hashPassword(req.body.password)
+      Password:(req.body.password)
     },
     function(err, result) {
       if (err) {
@@ -28,9 +28,9 @@ router.post("/signup", async(req, res, next) =>{
 
 // login user and return JWT as cookie
 // attempt to find the user by their username, if not found then respond 401 unauthorized
-router.post("/login", async(req, res, next) => {
+router.post("/login", function(req, res, next) {
   console.log(req.body);
-  await User.findOne({ username: req.body.username }, function(err, userInfo) {
+   User.findOne({ username: req.body.username }, function(err, userInfo) {
     if (err) {
       console.log("ERROR");
       console.log(err);
@@ -59,10 +59,10 @@ router.post("/login", async(req, res, next) => {
 });
 
 // find a profile from a user (their user object) based on the received jtw cookie
-router.get("/profile", authService.verifyUser, async(req, res, next) => {
+router.get("/profile", authService.verifyUser, function(req, res, next)  {
   // authService.verifyUser attaches req.body.userId from the jtw cookie if it's valid
   // find the user by their id
-  await User.findById(req.body.userId, function(err, userInfo) {
+   User.findById(req.body.userId, function(err, userInfo) {
     if (err) {
       console.log(err);
       res.json("invalid credentials");
@@ -73,14 +73,14 @@ router.get("/profile", authService.verifyUser, async(req, res, next) => {
 });
 
 // logout
-router.get("/logout", async(req, res, next) => {
+router.get("/logout", function(req, res, next) {
   // set a new jwt cookie that will immediately expire
   res.cookie("jwt", "", { expires: new Date(0) });
   res.json("Logged out");
 });
 
 // validate a token
-router.get("/validateToken", authService.verifyUser, async(req, res, next) =>{
+router.get("/validateToken", authService.verifyUser, function(req, res, next) {
   // if there is a token we return true
   // this only happens if verifyUser is passed successfully (validates token)
   res.json(true);
