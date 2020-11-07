@@ -33,4 +33,4 @@ User.pre("save", function(next) {
 });
 
 var UserModel = mongoose.model("User", User);
-module.exports = UserModel
+module.exports = UserModel;

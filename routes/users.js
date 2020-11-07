@@ -5,16 +5,17 @@ var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authService = require("../services/auth");
 
+
 // create new user if one doesn't exist
-router.post("/signup", function(req, res, next) {
+router.post("/register", function(req, res, next) {
   console.log(req.body);
-   User.create(
+  User.create(
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       username: req.body.username,
-      Password:(req.body.password)
+      password: req.body.password
     },
     function(err, result) {
       if (err) {
@@ -30,7 +31,7 @@ router.post("/signup", function(req, res, next) {
 // attempt to find the user by their username, if not found then respond 401 unauthorized
 router.post("/login", function(req, res, next) {
   console.log(req.body);
-   User.findOne({ username: req.body.username }, function(err, userInfo) {
+  User.findOne({ username: req.body.username }, function(err, userInfo) {
     if (err) {
       console.log("ERROR");
       console.log(err);
@@ -39,7 +40,7 @@ router.post("/login", function(req, res, next) {
       // make sure we found a user, then compare the passwords
       if (
         userInfo &&
-        bcrypt.compareSync(plainTextPassword, hashedPassword)
+        bcrypt.compareSync(req.body.password, userInfo.password)
       ) {
         let token = jwt.sign(
           { id: userInfo._id, userName: userInfo.username },
@@ -59,10 +60,10 @@ router.post("/login", function(req, res, next) {
 });
 
 // find a profile from a user (their user object) based on the received jtw cookie
-router.get("/profile", authService.verifyUser, function(req, res, next)  {
+router.get("/profile", authService.verifyUser, function(req, res, next) {
   // authService.verifyUser attaches req.body.userId from the jtw cookie if it's valid
   // find the user by their id
-   User.findById(req.body.userId, function(err, userInfo) {
+  User.findById(req.body.userId, function(err, userInfo) {
     if (err) {
       console.log(err);
       res.json("invalid credentials");

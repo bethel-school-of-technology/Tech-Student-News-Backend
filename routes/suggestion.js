@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-Suggestion = require("../models/suggestion");
+var Suggestion = require("../models/suggestion");
 
 router.get("/", async (req, res) => {
   try{
