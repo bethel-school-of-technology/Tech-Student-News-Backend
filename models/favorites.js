@@ -2,7 +2,7 @@ var mongoose = require ('mongoose');
 
 var Schema = mongoose.Schema;
 
-var Article = new Schema(
+var Favorites = new Schema(
    {
         Category:{type:String},
         Date:{type: Date},
@@ -11,6 +11,6 @@ var Article = new Schema(
     }
    );
 
-var ArticleModel = mongoose.model('Article' , Article);
+var FavoritesModel = mongoose.model('Favorites' , Favorites);
 
-module.exports = ArticleModel;
+module.exports = FavoritesModel;

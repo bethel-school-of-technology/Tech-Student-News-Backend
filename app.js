@@ -7,7 +7,8 @@ var cors = require('cors');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-var articlesRouter = require('./routes/articles');
+var favoritesRouter = require('./routes/favorites');
+var projectsRouter = require('./routes/projects');
 var eventsRouter = require('./routes/events');
 var suggestionsRouter = require('./routes/suggestion');
 var indexRouter = require('./routes/index');
@@ -44,9 +45,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());// {origin: "http://localhost:4200", credentials: true }));
 app.use(bodyParser.json());
 
-
+app.use('/favorites',favoritesRouter);
+app.use('/projects',projectsRouter);
 app.use('/event',eventsRouter);
-app.use('/article',articlesRouter);
 app.use('/suggestion',suggestionsRouter);
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
