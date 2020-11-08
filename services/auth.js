@@ -1,6 +1,9 @@
-const jwt = require("jsonwebtoken");
-var User = require("../models/user");
-const bcrypt = require("bcryptjs");
+
+var express = require("express");
+var router = express.Router();
+const jwt = require('jsonwebtoken');
+var bcrypt = require("bcryptjs");
+
 
 var authService = {
   signUser: function(user) {
@@ -20,7 +23,7 @@ var authService = {
     //<--- receive JWT token as parameter
     try {
       let decoded = jwt.verify(token, "secretkey"); //<--- Decrypt token using same key used to encrypt
-      return User.findByPk(decoded.userId); //<--- Return result of database query as promise
+      return router.users.findByPk(decoded.userId); //<--- Return result of database query as promise
     } catch (err) {
       console.log(err);
       return null;

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require("bcryptjs");
+const { Timestamp } = require('mongodb');
 
 var Schema = mongoose.Schema;
 
@@ -30,7 +31,7 @@ User.pre("save", function(next) {
   let salt = bcrypt.genSaltSync(10);
   this.password = bcrypt.hashSync(this.password, salt);
   next();
-});
+}); 
 
 var UserModel = mongoose.model("User", User);
 module.exports = UserModel;

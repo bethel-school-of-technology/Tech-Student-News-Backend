@@ -15,10 +15,13 @@ var suggestionsRouter = require('./routes/suggestion');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+
+
 var app = express();
 
 // Setting up Mongoose Connection
 var mongoose = require ('mongoose');
+const morgan = require('morgan');
 var mongoDB = 'mongodb+srv://dbuser:Password1!@cluster0.0xruf.mongodb.net/Tech-Student-News?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
@@ -46,12 +49,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({ origin: "http://localhost:4200", credentials: true }));
 app.use(bodyParser.json());
 
+
+
 app.use('/favorites',favoritesRouter);
 app.use('/projects',projectsRouter);
 app.use('/event',eventsRouter);
 app.use('/suggestion',suggestionsRouter);
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+
+
 
 //var mongoDB = "mongodb://127.0.0.1/database";
 //mongoose.connect(mongoDB, {  useNewUrlParser: true });
