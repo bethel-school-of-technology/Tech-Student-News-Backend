@@ -13,7 +13,7 @@ var projectsRouter = require('./routes/projects');
 var eventsRouter = require('./routes/events');
 var suggestionsRouter = require('./routes/suggestion');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var usersRouter = require('./routes/users');
 
 
 
@@ -56,7 +56,7 @@ app.use('/projects',projectsRouter);
 app.use('/event',eventsRouter);
 app.use('/suggestion',suggestionsRouter);
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
+//app.use('/user', usersRouter);
 
 
 

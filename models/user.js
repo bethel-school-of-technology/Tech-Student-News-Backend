@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+/*var mongoose = require('mongoose');
 var bcrypt = require("bcryptjs");
 const { Timestamp } = require('mongodb');
 
@@ -34,4 +34,4 @@ User.pre("save", function(next) {
 }); 
 
 var UserModel = mongoose.model("User", User);
-module.exports = UserModel;
+module.exports = UserModel;*/

@@ -1,4 +1,4 @@
-var express = require("express");
+/*var express = require("express");
 var router = express.Router();
 var UserModel = require("../models/user");
 var bcrypt = require("bcryptjs");
@@ -86,4 +86,4 @@ router.get("/validateToken", authService.verifyUser, function(req, res, next) {
   res.json(true);
 });
 
-module.exports = router;
+module.exports = router;*/
